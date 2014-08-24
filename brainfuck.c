@@ -51,20 +51,20 @@ int find_end_position(char* program, int start_character)
 int exec(char* program, int current_position)
 {
 	if (program[current_position] == '>') // Move pointer right
-        ++ptr;
-    else if (program[current_position] == '<') // Move pointer left
-        --ptr;
-    else if (program[current_position] == '+') // Increment value
-        ++*ptr;
-    else if (program[current_position] == '-') // Decrement value
-        --*ptr;
-    else if (program[current_position] == '.') // Output character
-        putchar(*ptr);
-    else if (program[current_position] == ',') // Input character
-        *ptr = getchar();
-    else if (program[current_position] == '[') // The start of a loop
-    {
-        int start_position = current_position + 1; // The first instruction in the loop
+		++ptr;
+	else if (program[current_position] == '<') // Move pointer left
+		--ptr;
+	else if (program[current_position] == '+') // Increment value
+		++*ptr;
+	else if (program[current_position] == '-') // Decrement value
+		--*ptr;
+	else if (program[current_position] == '.') // Output character
+		putchar(*ptr);
+	else if (program[current_position] == ',') // Input character
+		*ptr = getchar();
+	else if (program[current_position] == '[') // The start of a loop
+	{
+		int start_position = current_position + 1; // The first instruction in the loop
 		int end_position = find_end_position(program, current_position);
 		if (end_position == -1)
 		{
@@ -79,15 +79,15 @@ int exec(char* program, int current_position)
 			line_counter++;
 		}
 		unsigned long loop_length = end_position - start_position + 1;
-        while (*ptr)
-        {
-            for (int i = 0; i < loop_length; i++) //
+		while (*ptr)
+		{
+			for (int i = 0; i < loop_length; i++) //
 			{
 				i = exec(loop, i);
 			}
-        }
+		}
 		return end_position + 1; // Changes the position to be right after the loop
-    }
+	}
 	return current_position; // Doesn't change the current position
 }
 
@@ -125,18 +125,18 @@ int main(int argc, char *argv[])
 	{
 		begin = clock();
 	}
-    program_length = strlen(program); // Figures out how long the program is
-    for (int i = 0; i < program_length; i++) // Loops over the program
-    {
-        i = exec(program, i); // Processes the current character
+	program_length = strlen(program); // Figures out how long the program is
+	for (int i = 0; i < program_length; i++) // Loops over the program
+	{
+		i = exec(program, i); // Processes the current character
 		// i is reset by exec in case exec encounters a loop
 		// A loop will result in a different counter when it finishes looping.
-    }
+	}
 	if (time_program)
 	{
 		end = clock();
 		time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
 		printf("\nTime spent: %f seconds\n", time_spent);
 	}
-    return 0;
+	return 0;
 }
